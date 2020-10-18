@@ -1,0 +1,5 @@
+# Flask constrained
+Flask==1.1.2
+
+# WSGI server
+gunicorn
