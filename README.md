@@ -1,6 +1,6 @@
 <p align="center">
     <img src="pixette.png" width="224">
-    <p align="center">🔳 Streaming camera with LCD live preview and web interface on a Raspberry Pi Zero W</P>
+    <p align="center">🔳 Display daily news and photos on a 1.44" Raspberry Pi Zero LCD HAT with configuration over web</P>
     <p align="center">
         <img src="https://img.shields.io/badge/-Raspberry%20Pi%20Zero%20W-black?style=flat-square&logo=raspberry%20pi&logoColor=C51A4A">
         <img src="https://img.shields.io/badge/python-3.8%2B-lightblue?style=flat-square&logo=python&logoColor=lightblue">
@@ -35,6 +35,36 @@ fbtft_device
 options fbtft_device name=adafruit18_green gpios=reset:27,dc:25,cs:8,led:24 speed=40000000 bgr=1 fps=60 custom=1 height=128 width=128 rotate=180
 ```
 
+* Add the following lines to `/boot/config.txt`
+```bash
+# /boot/config.txt
+dtoverlay=pwm-2chan,pin=18,func=2,pin2=13,func2=4
+hdmi_force_hotplug=1
+hdmi_cvt=128 128 60 1 0 0 0
+hdmi_group=2
+hdmi_mode=1
+hdmi_mode=87
+display_rotate=1
+```
+
+* Synchroneous copy between `fb0` and `fb1`
+If you want to display console on the screen you will need to use `fbcp`:
+
+```bash
+$ sudo apt install git cmake
+$ git clone https://github.com/tasanakorn/rpi-fbcp
+$ mkdir rpi-fbcp/build
+$ cd rpi-fbcp/build/
+$ cmake .. && make
+$ sudo install fbcp /usr/local/bin/fbcp
+```
+
+* Launch `fbcp` automatically at startup
+Add the following lines to `/etc/modprobe.d/fbtft.conf` before `exit 0`:
+```bash
+fbcp&
+```
+
 ## Software
 
 ### Requirements
@@ -42,10 +72,11 @@ options fbtft_device name=adafruit18_green gpios=reset:27,dc:25,cs:8,led:24 spee
 * Python >= 3.8
 
 ```bash
-$ sudo apt install python3-pil python3-spidev python3-rpi.gpio
+$ sudo apt install python3-pil python3-rpi.gpio python3-pygame
 ```
 
 ### Usage
+You need root access to modify the framebuffer!
 
 ## License
 
