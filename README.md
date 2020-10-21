@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="pixette.png" width="224">
+    <img src="logo.png" width="224">
     <p align="center">🔳 Display daily news and photos on a 1.44" Raspberry Pi Zero LCD HAT with configuration over web</P>
     <p align="center">
         <img src="https://img.shields.io/badge/-Raspberry%20Pi%20Zero%20W-black?style=flat-square&logo=raspberry%20pi&logoColor=C51A4A">
@@ -47,7 +47,7 @@ hdmi_mode=87
 display_rotate=1
 ```
 
-* Synchroneous copy between `fb0` and `fb1`
+* Synchroneous copy between `fb0` and `fb1`  
 If you want to display console on the screen you will need to use `fbcp`:
 
 ```bash
@@ -59,7 +59,7 @@ $ cmake .. && make
 $ sudo install fbcp /usr/local/bin/fbcp
 ```
 
-* Launch `fbcp` automatically at startup
+* Launch `fbcp` automatically at startup  
 Add the following lines to `/etc/modprobe.d/fbtft.conf` before `exit 0`:
 ```bash
 fbcp&
