@@ -1,14 +1,1 @@
-# Flask constrained
-Flask==1.1.2
-
-# Pygame constrained
-pygame==1.9.6
-
-# WSGI server
-gunicorn
-
-# Raspberry PI GPIO
-RPi.GPIO
-
-# Utility
-pytz
+pygame==2.0.0
