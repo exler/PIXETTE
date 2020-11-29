@@ -1,32 +1,37 @@
 from datetime import date, datetime
 
 from pixette.scene import Scene
-from pixette.constants import DATETIME_FONT, Colors
+from pixette.constants import *
 
 import pygame
 
 
 class ClockScene(Scene):
     def __init__(self):
-        self.datetime_font = pygame.font.Font(DATETIME_FONT, 16)
-        self.now = datetime.now()
+        self.font = pygame.font.Font(DATETIME_FONT, 16)
+
+    def on_enter(self, previous_scene):
+        super().on_enter(previous_scene)
+
+        self.logo = pygame.image.load(LOGO_LIGHT)
+        self.logo_rect = self.logo.get_rect(
+            center=(self.application.width / 2, (self.application.height / 2) - 32)
+        )
 
     def update(self, dt):
         self.now = datetime.now()
 
     def draw(self, screen):
         screen.fill(Colors.BLACK)
-        date_text = self.datetime_font.render(
-            self.now.strftime("%a, %d.%m.%Y"), True, Colors.WHITE
-        )
-        time_text = self.datetime_font.render(
-            self.now.strftime("%H:%M:%S"), True, Colors.WHITE
-        )
-        date_text_rect = date_text.get_rect(
-            center=(self.application.width / 2, (self.application.height / 2) - 24)
-        )
-        time_text_rect = time_text.get_rect(
+        date = self.font.render(self.now.strftime("%a, %d.%m.%Y"), True, Colors.WHITE)
+        time = self.font.render(self.now.strftime("%H:%M:%S"), True, Colors.WHITE)
+        date_rect = date.get_rect(
             center=(self.application.width / 2, self.application.height / 2)
         )
-        screen.blit(date_text, date_text_rect)
-        screen.blit(time_text, time_text_rect)
+        time_rect = time.get_rect(
+            center=(self.application.width / 2, (self.application.height / 2) + 24)
+        )
+
+        screen.blit(self.logo, self.logo_rect)
+        screen.blit(date, date_rect)
+        screen.blit(time, time_rect)

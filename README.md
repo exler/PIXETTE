@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="logo.png" width="224">
+    <img src="pixette/assets/images/logo.png" width="224">
     <p align="center">🔳 Display daily news and photos on a 1.44" Raspberry Pi Zero LCD HAT with configuration over web</P>
     <p align="center">
         <img src="https://img.shields.io/badge/-Raspberry%20Pi%20Zero%20W-black?style=flat-square&logo=raspberry%20pi&logoColor=C51A4A">

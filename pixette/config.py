@@ -16,5 +16,3 @@ class AppConfig:
 
         if self.debug:
             logger.setLevel(logging.DEBUG)
-        else:
-            logger.setLevel(logging.INFO)
