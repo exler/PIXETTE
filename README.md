@@ -60,7 +60,7 @@ $ sudo install fbcp /usr/local/bin/fbcp
 ```
 
 * Launch `fbcp` automatically at startup  
-Add the following lines to `/etc/modprobe.d/fbtft.conf` before `exit 0`:
+Add the following lines to `/etc/rc.local` before `exit 0`:
 ```bash
 fbcp&
 ```
