@@ -1,6 +1,6 @@
 <p align="center">
     <img src="pixette/assets/images/logo.png" width="224">
-    <p align="center">🔳 Display daily news and photos on a 1.44" Raspberry Pi Zero LCD HAT with configuration over web</P>
+    <p align="center">📟 Clock and Spotify controller on a Raspberry Pi Zero LCD HAT</p>
     <p align="center">
         <img src="https://img.shields.io/badge/-Raspberry%20Pi%20Zero%20W-black?style=flat-square&logo=raspberry%20pi&logoColor=C51A4A">
         <img src="https://img.shields.io/badge/python-3.8%2B-lightblue?style=flat-square&logo=python&logoColor=lightblue">
@@ -72,7 +72,7 @@ fbcp&
 * Python >= 3.8
 
 ```bash
-$ sudo apt install python3-pil python3-rpi.gpio python3-pygame
+$ sudo apt install python3-rpi.gpio python3-pygame
 ```
 
 ### Usage
