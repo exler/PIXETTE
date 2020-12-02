@@ -1,4 +1,1 @@
 pygame==2.0.0
-
-# SpotifyScene
-spotipy

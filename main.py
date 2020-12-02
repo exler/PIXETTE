@@ -4,7 +4,6 @@ import pixette
 from pixette.config import AppConfig
 from pixette.application import Application
 from pixette.scenes.clock import ClockScene
-from pixette.scenes.spotify import SpotifyScene
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -20,7 +19,9 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
-    config = AppConfig(spotify_client_id="", spotify_client_secret="", debug=args.debug)
+    config = AppConfig(
+        debug=args.debug,
+    )
     app = Application(
         config=config, title="Pixette", resolution=(128, 128), update_rate=4
     )

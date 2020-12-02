@@ -24,8 +24,8 @@ class ClockScene(Scene):
         self.arrows_up_rect = self.arrows_up.get_rect(
             center=(self.application.width / 2, (self.application.height / 2) - 54)
         )
-        self.spotify_text = self.small_font.render("Spotify", True, Colors.WHITE)
-        self.spotify_text_rect = self.spotify_text.get_rect(
+        self.up_text = self.small_font.render("Screen", True, Colors.WHITE)
+        self.up_text_rect = self.up_text.get_rect(
             center=(self.application.width / 2, (self.application.height / 2) - 44)
         )
 
@@ -44,7 +44,7 @@ class ClockScene(Scene):
         )
 
         screen.blit(self.logo, self.logo_rect)
-        screen.blit(self.arrows_up, self.arrows_up_rect)
-        screen.blit(self.spotify_text, self.spotify_text_rect)
+        # screen.blit(self.arrows_up, self.arrows_up_rect)
+        # screen.blit(self.up_text, self.up_text_rect)
         screen.blit(date, date_rect)
         screen.blit(time, time_rect)
