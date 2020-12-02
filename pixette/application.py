@@ -12,10 +12,15 @@ class Application:
     def __init__(
         self, config: AppConfig, title: str, resolution: tuple, update_rate: int
     ):
+        self.config = config
+        if not self.config.debug:
+            os.environ["SDL_VIDEODRIVER"] = "fbcon"
+            os.environ["SDL_FBDEV"] = "/dev/fb1"
+            os.environ["SDL_VIDEO_CENTERED"] = "1"
+
         pygame.init()
         pygame.mouse.set_visible(False)
 
-        self.config = config
         self._scene = None
 
         self.title = title
