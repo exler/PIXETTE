@@ -6,6 +6,7 @@ DATETIME_FONT_BOLD = "pixette/assets/fonts/ds-digib.ttf"
 
 # Images
 LOGO_LIGHT = "pixette/assets/images/logo_light.png"
+ARROWS_UP = "pixette/assets/images/chevrons-up.svg"
 
 
 class PiButtons:

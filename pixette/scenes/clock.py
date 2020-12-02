@@ -9,13 +9,24 @@ import pygame
 class ClockScene(Scene):
     def __init__(self):
         self.font = pygame.font.Font(DATETIME_FONT, 16)
+        self.small_font = pygame.font.SysFont(DATETIME_FONT, 12)
 
     def on_enter(self, previous_scene):
         super().on_enter(previous_scene)
 
         self.logo = pygame.image.load(LOGO_LIGHT)
         self.logo_rect = self.logo.get_rect(
-            center=(self.application.width / 2, (self.application.height / 2) - 32)
+            center=(self.application.width / 2, (self.application.height / 2) - 26)
+        )
+
+        self.arrows_up = pygame.image.load(ARROWS_UP)
+        self.arrows_up = pygame.transform.scale(self.arrows_up, (12, 12))
+        self.arrows_up_rect = self.arrows_up.get_rect(
+            center=(self.application.width / 2, (self.application.height / 2) - 54)
+        )
+        self.spotify_text = self.small_font.render("Spotify", True, Colors.WHITE)
+        self.spotify_text_rect = self.spotify_text.get_rect(
+            center=(self.application.width / 2, (self.application.height / 2) - 44)
         )
 
     def update(self, dt):
@@ -33,5 +44,7 @@ class ClockScene(Scene):
         )
 
         screen.blit(self.logo, self.logo_rect)
+        screen.blit(self.arrows_up, self.arrows_up_rect)
+        screen.blit(self.spotify_text, self.spotify_text_rect)
         screen.blit(date, date_rect)
         screen.blit(time, time_rect)
