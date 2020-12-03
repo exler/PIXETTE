@@ -15,24 +15,11 @@ logger = logging.getLogger()
 
 
 class AppConfig:
-    BTN_LIST = [
-        Pins.UP,
-        Pins.DOWN,
-        Pins.LEFT,
-        Pins.RIGHT,
-        Pins.KEY_A,
-        Pins.KEY_B,
-        Pins.KEY_C,
-        Pins.PRESS,
-    ]
-
     def __init__(
         self,
         debug: bool = False,
     ):
         self.debug = debug
-
-        self._backlight = True
 
         if self.debug:
             logger.setLevel(logging.DEBUG)
@@ -40,29 +27,20 @@ class AppConfig:
             self.init_GPIO()
 
     def init_GPIO(self):
-        import RPi.GPIO as GPIO
+        from gpiozero import Button, LED
 
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setwarnings(False)
-        # Buttons
-        for btn in self.BTN_LIST:
-            GPIO.setup(btn, GPIO.IN, GPIO.PUD_UP)
+        self.backlight = LED(Pins.BACKLIGHT)
 
-        # Backlight
-        GPIO.setup(Pins.BACKLIGHT, GPIO.OUT)
+        backlight_button = Button(Pins.KEY_C)
+        backlight_button.when_pressed = self._toggle_backlight
 
-    def keys(self, event=None):
-        if event:
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_b:
-                    logging.debug("Backlight button pressed!")
+    def keys(self, event):
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_b:
+                logging.debug("Backlight button pressed!")
+
+    def _toggle_backlight(self):
+        if self.backlight.is_active:
+            self.backlight.off()
         else:
-            import RPi.GPIO as GPIO
-
-            BACKLIGHT_BTN = GPIO.input(Pins.KEY_C)
-            if not BACKLIGHT_BTN:
-                if self._backlight:
-                    GPIO.output(Pins.BACKLIGHT, 0)
-                else:
-                    GPIO.output(Pins.BACKLIGHT, 1)
-                self._backlight = not self._backlight
+            self.backlight.on()
