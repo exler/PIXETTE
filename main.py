@@ -23,6 +23,6 @@ if __name__ == "__main__":
         debug=args.debug,
     )
     app = Application(
-        config=config, title="Pixette", resolution=(128, 128), update_rate=4
+        config=config, title="Pixette", resolution=(128, 128), update_rate=60
     )
     app.run(ClockScene())

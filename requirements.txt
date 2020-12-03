@@ -1,1 +1,7 @@
 pygame==2.0.0
+
+# Formatter
+black
+
+# Linter
+pylint

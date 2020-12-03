@@ -6,12 +6,7 @@ DATETIME_FONT_BOLD = "pixette/assets/fonts/ds-digib.ttf"
 
 # Images
 LOGO_LIGHT = "pixette/assets/images/logo_light.png"
-ARROWS_UP = "pixette/assets/images/chevrons-up.svg"
-SKIP_BACK = "pixette/assets/images/skip-back.svg"
-SKIP_FORWARD = "pixette/assets/images/skip-forward.svg"
-PAUSE = "pixette/assets/images/pause.svg"
-PLAY = "pixette/assets/images/play.svg"
-SPOTIFY_LOGO = "pixette/assets/images/spotify.svg"
+ARROWS_UP = "pixette/assets/images/chevrons-up.png"
 
 
 class PiButtons:

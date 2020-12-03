@@ -14,7 +14,6 @@ class Application:
     ):
         self.config = config
         if not self.config.debug:
-            os.environ["SDL_VIDEODRIVER"] = "fbcon"
             os.environ["SDL_FBDEV"] = "/dev/fb1"
             os.environ["SDL_VIDEO_CENTERED"] = "1"
 
@@ -85,14 +84,21 @@ class Application:
         clock = pygame.time.Clock()
 
         while self.active_scene is not None:
-            for event in pygame.event.get():
-                self.active_scene.handle_event(event)
-                if event.type == pygame.QUIT:
-                    self.change_scene(None)  # trigger scene.on_exit()
-                    return
+            try:
+                for event in pygame.event.get():
+                    self.active_scene.handle_event(event)
+                    if event.type == pygame.QUIT:
+                        self.change_scene(None)  # trigger scene.on_exit()
+                        return
 
-            dt = clock.tick(self.update_rate)
-            self.active_scene.update(dt)
+                dt = clock.tick(self.update_rate)
+                self.active_scene.update(dt)
 
-            self.active_scene.draw(self._screen)
-            pygame.display.update()
+                self.active_scene.draw(self._screen)
+                pygame.display.update()
+            except KeyboardInterrupt:
+                logging.info("Shutting down")
+                os.exit(0)
+            except Exception as e:
+                logging.exception(f"Caught exception: {e}", exc_info=True)
+                os.exit(1)

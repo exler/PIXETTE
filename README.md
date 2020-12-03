@@ -32,7 +32,7 @@ fbtft_device
 * Add the following lines to `/etc/modprobe.d/fbtft.conf`
 ```bash
 # /etc/modprobe.d/fbtft.conf
-options fbtft_device name=adafruit18_green gpios=reset:27,dc:25,cs:8,led:24 speed=40000000 bgr=1 fps=60 custom=1 height=128 width=128 rotate=180
+options fbtft_device name=adafruit18_green gpios=reset:27,dc:25,cs:8,led:24 speed=40000000 bgr=1 fps=60 custom=1 height=128 width=128 rotate=90
 ```
 
 * Add the following lines to `/boot/config.txt`
@@ -72,11 +72,21 @@ fbcp&
 * Python >= 3.8
 
 ```bash
-$ sudo apt install python3-pygame
+$ sudo apt install python3-pygame libsdl2-dev libsdl2-ttf-dev
 ```
 
 ### Usage
 You need root access to modify the framebuffer!
+
+```bash
+$ sudo python3 main.py
+```
+
+Add this to `/etc/rc.local` to run Pixette at startup:
+```bash
+$ cd /home/pi/pixette
+$ sudo python3 main.py &
+```
 
 ## License
 
