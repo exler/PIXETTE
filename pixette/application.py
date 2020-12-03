@@ -1,4 +1,5 @@
 import os
+import sys
 import logging
 
 os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "1"
@@ -105,7 +106,7 @@ class Application:
 
                     GPIO.cleanup()
 
-                os.exit(0)
+                sys.exit(0)
             except Exception as e:
                 logging.exception(f"Caught exception: {e}", exc_info=True)
 
@@ -114,4 +115,4 @@ class Application:
 
                     GPIO.cleanup()
 
-                os.exit(1)
+                sys.exit(1)
