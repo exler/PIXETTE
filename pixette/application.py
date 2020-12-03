@@ -86,12 +86,15 @@ class Application:
 
         while self.active_scene is not None:
             try:
-                for event in pygame.event.get():
-                    self.active_scene.handle_event(event)
-                    if event.type == pygame.QUIT:
-                        self.change_scene(None)  # trigger scene.on_exit()
-                        return
-                    self.config.keys(event)
+                if self.config.debug:
+                    for event in pygame.event.get():
+                        self.active_scene.handle_event(event)
+                        if event.type == pygame.QUIT:
+                            self.change_scene(None)  # trigger scene.on_exit()
+                            return
+                        self.config.keys(event)
+                else:
+                    self.config.keys()
 
                 dt = clock.tick(self.update_rate)
                 self.active_scene.update(dt)

@@ -51,8 +51,8 @@ class AppConfig:
         # Backlight
         GPIO.setup(Pins.BACKLIGHT, GPIO.OUT)
 
-    def keys(self, event):
-        if self.debug:
+    def keys(self, event=None):
+        if event:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_b:
                     logging.debug("Backlight button pressed!")
@@ -60,7 +60,7 @@ class AppConfig:
             import RPi.GPIO as GPIO
 
             BACKLIGHT_BTN = GPIO.input(Pins.KEY_C)
-            if BACKLIGHT_BTN:
+            if not BACKLIGHT_BTN:
                 if self._backlight:
                     GPIO.output(Pins.BACKLIGHT, 0)
                 else:
