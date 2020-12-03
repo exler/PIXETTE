@@ -65,3 +65,4 @@ class AppConfig:
                     GPIO.output(Pins.BACKLIGHT, 0)
                 else:
                     GPIO.output(Pins.BACKLIGHT, 1)
+                self._backlight = not self._backlight
