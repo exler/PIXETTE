@@ -33,8 +33,8 @@ class AppConfig:
         self.backlight = LED(Pins.BACKLIGHT)
         self.backlight.on()
 
-        backlight_button = Button(Pins.KEY_C)
-        backlight_button.when_pressed = lambda: toggle_backlight(self.backlight)
+        self.backlight_button = Button(Pins.KEY_C)
+        self.backlight_button.when_pressed = lambda: toggle_backlight(self.backlight)
 
     def keys(self, event):
         if event.type == pygame.KEYDOWN:
