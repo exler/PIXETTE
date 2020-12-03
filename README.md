@@ -7,6 +7,9 @@
         <img src="https://img.shields.io/github/license/EXLER/pixette?style=flat-square">
         <img src="https://img.shields.io/github/repo-size/EXLER/pixette?style=flat-square">
     </p>
+    <p align="center">
+        <img src="docs/image_rpi.jpg" alt="Photo of Pixette on the Raspberry Pi LCD">
+    </p>
 </p>
 
 ## Hardware
