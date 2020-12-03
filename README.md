@@ -75,7 +75,7 @@ fbcp&
 * Python >= 3.8
 
 ```bash
-$ sudo apt install python3-pygame libsdl2-dev libsdl2-ttf-dev
+$ sudo apt install python3-pygame python3-rpi.gpio libsdl2-dev libsdl2-ttf-dev
 ```
 
 ### Usage

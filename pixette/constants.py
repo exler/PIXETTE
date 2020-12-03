@@ -1,5 +1,3 @@
-from pathlib import Path
-
 # Fonts
 DATETIME_FONT = "pixette/assets/fonts/ds-digi.ttf"
 DATETIME_FONT_BOLD = "pixette/assets/fonts/ds-digib.ttf"
@@ -9,7 +7,7 @@ LOGO_LIGHT = "pixette/assets/images/logo_light.png"
 ARROWS_UP = "pixette/assets/images/chevrons-up.png"
 
 
-class PiButtons:
+class Pins:
     KEY_A = 21
     KEY_B = 20
     KEY_C = 16
@@ -18,6 +16,7 @@ class PiButtons:
     LEFT = 5
     RIGHT = 26
     PRESS = 13
+    BACKLIGHT = 24
 
 
 class Colors:

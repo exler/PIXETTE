@@ -90,6 +90,7 @@ class Application:
                     if event.type == pygame.QUIT:
                         self.change_scene(None)  # trigger scene.on_exit()
                         return
+                    self.config.keys(event)
 
                 dt = clock.tick(self.update_rate)
                 self.active_scene.update(dt)
@@ -98,7 +99,19 @@ class Application:
                 pygame.display.update()
             except KeyboardInterrupt:
                 logging.info("Shutting down")
+
+                if self.config.debug:
+                    import RPi.GPIO as GPIO
+
+                    GPIO.cleanup()
+
                 os.exit(0)
             except Exception as e:
                 logging.exception(f"Caught exception: {e}", exc_info=True)
+
+                if self.config.debug:
+                    import RPi.GPIO as GPIO
+
+                    GPIO.cleanup()
+
                 os.exit(1)
