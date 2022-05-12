@@ -1,18 +1,19 @@
-class Scene:
-    title = None
-    resolution = None
-    update_rate = None
+from abc import ABC
+from typing import Optional
 
+
+class Scene(ABC):
     def __init__(
-        self, title: str = None, resolution: tuple = None, update_rate: int = None
+        self,
+        title: Optional[str] = None,
+        resolution: Optional[tuple[int, int]] = None,
+        update_rate: Optional[int] = None,
     ):
         self._application = None
-        if title:
-            self.title = title
-        if resolution:
-            self.resolution = resolution
-        if update_rate:
-            self.update_rate = update_rate
+
+        self.title = title
+        self.resolution = resolution
+        self.update_rate = update_rate
 
     @property
     def application(self):

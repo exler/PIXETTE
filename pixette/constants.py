@@ -3,7 +3,7 @@ DATETIME_FONT = "pixette/assets/fonts/ds-digi.ttf"
 DATETIME_FONT_BOLD = "pixette/assets/fonts/ds-digib.ttf"
 
 # Images
-LOGO_LIGHT = "pixette/assets/images/logo_light.png"
+LOGO_LIGHT_SMALL = "pixette/assets/images/logo_light_small.png"
 ARROWS_UP = "pixette/assets/images/chevrons-up.png"
 
 

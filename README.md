@@ -1,14 +1,11 @@
 <p align="center">
-    <img src="pixette/assets/images/logo.png" width="224">
-    <p align="center">📟 Modular home assistant on a Raspberry Pi Zero LCD HAT</p>
+    <img src="pixette/assets/images/logo.png" width="256">
+    <p align="center">📟 Time/weather/currency display using a Raspberry Pi Zero with Waveshare LCD HAT</p>
     <p align="center">
         <img src="https://img.shields.io/badge/-Raspberry%20Pi%20Zero%20W-black?style=flat-square&logo=raspberry%20pi&logoColor=C51A4A">
-        <img src="https://img.shields.io/badge/python-3.8%2B-lightblue?style=flat-square&logo=python&logoColor=lightblue">
+        <img src="https://img.shields.io/badge/python-3.9%2B-lightblue?style=flat-square&logo=python&logoColor=lightblue">
         <img src="https://img.shields.io/github/license/EXLER/pixette?style=flat-square">
         <img src="https://img.shields.io/github/repo-size/EXLER/pixette?style=flat-square">
-    </p>
-    <p align="center">
-        <img src="docs/image_rpi.jpg" alt="Photo of Pixette on the Raspberry Pi LCD">
     </p>
 </p>
 
@@ -85,14 +82,12 @@ You need root access to modify the framebuffer!
 $ sudo python3 main.py
 ```
 
-Add this to `/etc/rc.local` to run Pixette at startup:
+Add this to `/etc/rc.local` to run PIXETTE at startup:
 ```bash
 $ cd /home/pi/pixette
-$ sudo python3 main.py &
+$ sudo python3 -m pixette &
 ```
 
 ## License
 
-Copyright (c) 2020 by ***Kamil Marut***
-
-`Pixette` is under the terms of the [MIT License](https://www.tldrlegal.com/l/mit), following all clarifications stated in the [license file](LICENSE).
+`PIXETTE` is under the terms of the [MIT License](https://www.tldrlegal.com/l/mit), following all clarifications stated in the [license file](LICENSE).
