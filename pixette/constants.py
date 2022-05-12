@@ -1,10 +1,9 @@
 # Fonts
-DATETIME_FONT = "pixette/assets/fonts/ds-digi.ttf"
-DATETIME_FONT_BOLD = "pixette/assets/fonts/ds-digib.ttf"
+STANDARD_FONT = "pixette/assets/fonts/ds-digi.ttf"
+STANDARD_FONT_BOLD = "pixette/assets/fonts/ds-digib.ttf"
 
 # Images
 LOGO_LIGHT_SMALL = "pixette/assets/images/logo_light_small.png"
-ARROWS_UP = "pixette/assets/images/chevrons-up.png"
 
 
 class Pins:

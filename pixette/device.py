@@ -31,7 +31,7 @@ class Device:
         else:
             self.backlight.on()
 
-    def keys(self, event):
+    def keys(self, event: pygame.event.Event) -> None:
         def press_button(button: Button) -> None:
             button.pin.drive_low()
             button.pin.drive_high()

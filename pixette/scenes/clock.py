@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import pygame
-from pixette.constants import DATETIME_FONT, LOGO_LIGHT_SMALL, Colors
+from pixette.constants import LOGO_LIGHT_SMALL, STANDARD_FONT, Colors
 from pixette.scenes.base import Scene
 
 
@@ -9,8 +9,8 @@ class ClockScene(Scene):
     def __init__(self) -> None:
         super().__init__()
 
-        self.font = pygame.font.Font(DATETIME_FONT, 16)
-        self.small_font = pygame.font.SysFont(DATETIME_FONT, 12)
+        self.font = pygame.font.Font(STANDARD_FONT, 16)
+        self.small_font = pygame.font.SysFont(STANDARD_FONT, 12)
 
     def on_enter(self, previous_scene):
         super().on_enter(previous_scene)
