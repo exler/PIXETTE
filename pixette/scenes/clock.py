@@ -10,7 +10,6 @@ class ClockScene(Scene):
         super().__init__()
 
         self.font = pygame.font.Font(STANDARD_FONT, 16)
-        self.small_font = pygame.font.SysFont(STANDARD_FONT, 12)
 
     def on_enter(self, previous_scene):
         super().on_enter(previous_scene)

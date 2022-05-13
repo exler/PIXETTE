@@ -31,7 +31,6 @@ class CurrenciesScene(Scene):
         self.update_interval = update_interval
 
         self.font = pygame.font.Font(STANDARD_FONT, 16)
-        self.small_font = pygame.font.SysFont(STANDARD_FONT, 12)
 
         self.nbp = NBPWebClient()
         self.last_check: Optional[datetime] = None
