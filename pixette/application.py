@@ -5,10 +5,10 @@ from typing import Optional, Type
 import pygame
 
 from pixette.device import Device
+from pixette.scenes.admin import AdminScene
 from pixette.scenes.base import Scene
 from pixette.scenes.clock import ClockScene
 from pixette.scenes.currencies import CurrenciesScene
-from pixette.scenes.settings import SettingsScene
 from pixette.scenes.weather import WeatherScene
 
 
@@ -29,7 +29,7 @@ class Application:
         self.resolution = resolution
         self.update_rate = update_rate
 
-        self.scenes = [ClockScene(), CurrenciesScene(), WeatherScene(lat=51.11, lon=17.04), SettingsScene()]
+        self.scenes = [ClockScene(), CurrenciesScene(), WeatherScene(lat=51.11, lon=17.04), AdminScene()]
 
         self.device.left_btn.when_pressed = self.previous_scene
         self.device.right_btn.when_pressed = self.next_scene

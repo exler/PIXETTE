@@ -24,6 +24,10 @@ class Device:
 
         self.left_btn = Button(Pins.LEFT)
         self.right_btn = Button(Pins.RIGHT)
+        self.up_btn = Button(Pins.UP)
+        self.down_btn = Button(Pins.DOWN)
+
+        self.key_a = Button(Pins.KEY_A)
 
     def toggle_backlight(self) -> None:
         if self.backlight.is_active:
@@ -44,3 +48,9 @@ class Device:
                 press_button(self.left_btn)
             elif event.key == pygame.K_RIGHT:
                 press_button(self.right_btn)
+            elif event.key == pygame.K_UP:
+                press_button(self.up_btn)
+            elif event.key == pygame.K_DOWN:
+                press_button(self.down_btn)
+            elif event.key == pygame.K_a:
+                press_button(self.key_a)

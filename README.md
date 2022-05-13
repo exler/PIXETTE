@@ -69,7 +69,7 @@ fbcp&
 
 ### Requirements
 
-* Python >= 3.8
+* Python >= 3.9
 
 ```bash
 $ sudo apt install python3-pygame python3-gpiozero libsdl2-dev libsdl2-ttf-dev
@@ -79,7 +79,7 @@ $ sudo apt install python3-pygame python3-gpiozero libsdl2-dev libsdl2-ttf-dev
 You need root access to modify the framebuffer!
 
 ```bash
-$ sudo python3 main.py
+$ sudo python3 -m pixette
 ```
 
 Add this to `/etc/rc.local` to run PIXETTE at startup:
