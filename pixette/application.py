@@ -30,6 +30,7 @@ class Application:
         self.update_rate = update_rate
 
         self.scenes = [ClockScene(), CurrenciesScene(), WeatherScene(lat=51.11, lon=17.04), AdminScene()]
+        logging.info("Scenes loaded")
 
         self.device.left_btn.when_pressed = self.previous_scene
         self.device.right_btn.when_pressed = self.next_scene

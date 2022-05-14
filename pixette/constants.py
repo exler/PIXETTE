@@ -4,7 +4,7 @@ STANDARD_FONT_BOLD = "pixette/assets/fonts/ds-digib.ttf"
 
 # Images
 LOGO_LIGHT_SMALL = "pixette/assets/images/logo_light_small.png"
-ARROW_RIGHT = "pixette/assets/images/chevron-right.svg"
+ARROW_RIGHT = "pixette/assets/images/chevron-right.png"
 
 
 class Pins:
