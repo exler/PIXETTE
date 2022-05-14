@@ -14,75 +14,76 @@
 * Raspberry Pi Zero W
 * [Waveshare 1.44 ST7735S LCD HAT](https://www.waveshare.com/wiki/1.44inch_LCD_HAT)
 
-### Setup
+## Installation
 
-* Enable SPI in `Interfacting Options > SPI` in `raspi-config`
-
+1. Enable SPI in `Interface Options > SPI`
 ```bash
 $ sudo raspi-config
 ```
 
-* Add the following lines to `/etc/modules`
+2. Reboot Raspberry Pi
 ```bash
-# /etc/modules
-spi-bcm2835
-fbtft_device
+$ sudo reboot
 ```
 
-* Add the following lines to `/etc/modprobe.d/fbtft.conf`
+3. Install BCM2835 libraries
 ```bash
-# /etc/modprobe.d/fbtft.conf
-options fbtft_device name=adafruit18_green gpios=reset:27,dc:25,cs:8,led:24 speed=40000000 bgr=1 fps=60 custom=1 height=128 width=128 rotate=90
+$ wget http://www.airspayce.com/mikem/bcm2835/bcm2835-1.68.tar.gz
+$ tar zxvf bcm2835-1.68.tar.gz 
+$ cd bcm2835-1.68/
+$ sudo ./configure && sudo make && sudo make check && sudo make install
 ```
 
-* Add the following lines to `/boot/config.txt`
+4. Install system libraries
 ```bash
-# /boot/config.txt
-dtoverlay=pwm-2chan,pin=18,func=2,pin2=13,func2=4
+$ sudo apt install p7zip-full git cmake python3-pip python3-dev python3-pygame python3-gpiozero python3-numpy libsdl2-dev libsdl2-image-dev libjpeg-dev libsdl2-ttf-dev libfreetype6-dev libsdl2-mixer-dev libportmidi-dev
+```
+
+5. Update `/boot/config.txt`
+```bash
+# Comment the following lines
+dtoverlay=vc4-fkms-v3d
+max_framebuffers=2
+
+# Add the following line at the end of the file
 hdmi_force_hotplug=1
-hdmi_cvt=128 128 60 1 0 0 0
+hdmi_cvt=300 300 60 1 0 0 0
 hdmi_group=2
-hdmi_mode=1
 hdmi_mode=87
-display_rotate=1
+display_rotate=0
+gpio=6,19,5,26,13,21,20,16=pu
 ```
 
-* Synchroneous copy between `fb0` and `fb1`  
-If you want to display console on the screen you will need to use `fbcp`:
-
-```bash
-$ sudo apt install git cmake
-$ git clone https://github.com/tasanakorn/rpi-fbcp
-$ mkdir rpi-fbcp/build
-$ cd rpi-fbcp/build/
-$ cmake .. && make
-$ sudo install fbcp /usr/local/bin/fbcp
+6. Setup FBCP
 ```
+$ wget https://www.waveshare.com/w/upload/f/f9/Waveshare_fbcp.7z
+$ 7z x Waveshare_fbcp.7z -o./waveshare_fbcp
+$ cd waveshare_fbcp
+$ mkdir build
+$ cd build
+$ cmake -DSPI_BUS_CLOCK_DIVISOR=20 -DWAVESHARE_1INCH44_LCD_HAT=ON -DBACKLIGHT_CONTROL=ON -DSTATISTICS=0 ..
+$ make -j
+$ sudo cp ~/waveshare_fbcp/build/fbcp /usr/local/bin/fbcp
+$ sudo nano /etc/rc.local
 
-* Launch `fbcp` automatically at startup  
-Add the following lines to `/etc/rc.local` before `exit 0`:
-```bash
+# Add this before exit 0
 fbcp&
 ```
 
-## Software
+## Usage
 
-### Requirements
-
-* Python >= 3.9
-
+* Install requirements
 ```bash
-$ sudo apt install python3-pygame python3-gpiozero libsdl2-dev libsdl2-ttf-dev
+$ pip install -r requirements.txt
 ```
 
-### Usage
-You need root access to modify the framebuffer!
+* Run application with `sudo` (root access is necessary to modify the framebuffer).
 
 ```bash
 $ sudo python3 -m pixette
 ```
 
-Add this to `/etc/rc.local` to run PIXETTE at startup:
+* Add this to `/etc/rc.local` to run PIXETTE at startup:
 ```bash
 $ cd /home/pi/pixette
 $ sudo python3 -m pixette &
