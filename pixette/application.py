@@ -16,7 +16,8 @@ class Application:
     def __init__(self, device: Device, title: str, resolution: tuple[int, int], update_rate: int, debug: bool = False):
         self.device = device
         if not debug:
-            os.environ["SDL_FBDEV"] = "/dev/fb1"
+            os.environ["SDL_FBDEV"] = "/dev/fb0"
+            os.environ["SDL_VIDEODRIVER"] = "fbcon"
             os.environ["SDL_VIDEO_CENTERED"] = "1"
 
         pygame.init()

@@ -16,17 +16,7 @@
 
 ## Installation
 
-1. Enable SPI in `Interface Options > SPI`
-```bash
-$ sudo raspi-config
-```
-
-2. Reboot Raspberry Pi
-```bash
-$ sudo reboot
-```
-
-3. Install BCM2835 libraries
+1. Install BCM2835 libraries
 ```bash
 $ wget http://www.airspayce.com/mikem/bcm2835/bcm2835-1.68.tar.gz
 $ tar zxvf bcm2835-1.68.tar.gz 
@@ -34,12 +24,12 @@ $ cd bcm2835-1.68/
 $ sudo ./configure && sudo make && sudo make check && sudo make install
 ```
 
-4. Install system libraries
+2. Install system libraries
 ```bash
-$ sudo apt install p7zip-full git cmake python3-pip python3-dev python3-pygame python3-gpiozero python3-numpy libsdl2-dev libsdl2-image-dev libjpeg-dev libsdl2-ttf-dev libfreetype6-dev libsdl2-mixer-dev libportmidi-dev
+$ sudo apt install git cmake python3-pip python3-dev python3-pygame python3-gpiozero python3-numpy libsdl2-dev libsdl2-image-dev libjpeg-dev libsdl2-ttf-dev libfreetype6-dev libsdl2-mixer-dev libportmidi-dev
 ```
 
-5. Update `/boot/config.txt`
+3. Update `/boot/config.txt`
 ```bash
 # Comment the following lines
 dtoverlay=vc4-fkms-v3d
@@ -54,10 +44,9 @@ display_rotate=0
 gpio=6,19,5,26,13,21,20,16=pu
 ```
 
-6. Setup FBCP
+4. Setup FBCP
 ```
-$ wget https://www.waveshare.com/w/upload/f/f9/Waveshare_fbcp.7z
-$ 7z x Waveshare_fbcp.7z -o./waveshare_fbcp
+$ git clone https://github.com/EngineerWill/waveshare_fbcp
 $ cd waveshare_fbcp
 $ mkdir build
 $ cd build
@@ -68,6 +57,14 @@ $ sudo nano /etc/rc.local
 
 # Add this before exit 0
 fbcp&
+```
+
+### Test the configuration
+
+To test the Raspberry Pi framebuffer configuration use the [Linux Framebuffer Imageviewer](https://linux.die.net/man/1/fbi):
+```bash
+$ sudo apt install fbi
+$ sudo fbi -T 2 -d /dev/fb0 image.png
 ```
 
 ## Usage
