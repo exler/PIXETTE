@@ -119,9 +119,12 @@ class AdminScene(Scene):
     def _update_ssh_status(self):
         if platform.system() == "Linux":
             output = subprocess.check_output(["service", "ssh", "status"])
-            if str(output).find("active (running)") != -1:
-                self.ssh_enabled = True
-            else:
+            try:
+                if str(output).find("active (running)") != -1:
+                    self.ssh_enabled = True
+                else:
+                    self.ssh_enabled = False
+            except subprocess.CalledProcessError:
                 self.ssh_enabled = False
         else:
             self.ssh_enabled = None
