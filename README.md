@@ -45,6 +45,7 @@ options fbtft_device name=adafruit18_green gpios=reset:27,dc:25,cs:8,led:24 spee
 5. Add the following lines to `/boot/config.txt`
 
 ```bash
+disable_overscan=1
 dtoverlay=pwm-2chan,pin=18,func=2,pin2=13,func2=4
 hdmi_force_hotplug=1
 hdmi_cvt=128 128 60 1 0 0 0
