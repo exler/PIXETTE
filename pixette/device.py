@@ -9,10 +9,10 @@ from pixette.constants import Pins
 
 
 class Device:
-    def __init__(self, mock: bool = False) -> None:
+    def __init__(self, mock=False):
         self.initialize_pins(mock=mock)
 
-    def initialize_pins(self, mock: bool = False) -> None:
+    def initialize_pins(self, mock=False):
         if mock:
             GPIODevice.pin_factory = MockFactory()
 
@@ -29,21 +29,21 @@ class Device:
 
         self.key_a = Button(Pins.KEY_A)
 
-    def toggle_backlight(self) -> None:
+    def toggle_backlight(self):
         if self.backlight.is_active:
             self.backlight.off()
         else:
             self.backlight.on()
 
-    def keys(self, event: pygame.event.Event) -> None:
-        def press_button(button: Button) -> None:
+    def keys(self, event):
+        def press_button(button):
             button.pin.drive_low()
             button.pin.drive_high()
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_b:
                 press_button(self.backlight_btn)
-                logging.debug(f"Backlight is turned {'on' if self.backlight.is_active else 'off'}!")
+                logging.debug("Backlight is turned %s!" % ("on" if self.backlight.is_active else "off"))
             elif event.key == pygame.K_LEFT:
                 press_button(self.left_btn)
             elif event.key == pygame.K_RIGHT:

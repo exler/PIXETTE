@@ -1,6 +1,4 @@
-from dataclasses import dataclass
 from datetime import datetime
-from typing import Optional
 
 import pygame
 import requests
@@ -25,13 +23,13 @@ WEATHER_CODES = {
 }
 
 
-@dataclass
 class WeatherData:
-    temperature: float
-    weather_code: int
+    def __init__(self, temperature, weather_code):
+        self.temperature = temperature
+        self.weather_code = weather_code
 
     @property
-    def weather(self) -> str:
+    def weather(self):
         for k, v in WEATHER_CODES.items():
             if self.weather_code in k:
                 return v
@@ -40,10 +38,10 @@ class WeatherData:
 class OpenMeteoAPIClient:
     FORECAST_URL = "https://api.open-meteo.com/v1/forecast"
 
-    def __init__(self) -> None:
+    def __init__(self):
         self.session = requests.Session()
 
-    def get_current_weather(self, lat: float, lon: float) -> WeatherData:
+    def get_current_weather(self, lat, lon):
         response = self.session.get(
             self.FORECAST_URL, params={"latitude": lat, "longitude": lon, "current_weather": True}
         )
@@ -55,7 +53,7 @@ class OpenMeteoAPIClient:
 
 
 class WeatherScene(Scene):
-    def __init__(self, lat: float, lon: float, update_interval: int = 3600):
+    def __init__(self, lat, lon, update_interval=3600):
         super().__init__()
 
         self.latitude = lat
@@ -67,7 +65,7 @@ class WeatherScene(Scene):
         self.small_font = pygame.font.Font(STANDARD_FONT, 14)
 
         self.open_meteo = OpenMeteoAPIClient()
-        self.last_check: Optional[datetime] = None
+        self.last_check = None
 
     def update(self, dt):
         now = datetime.now()
@@ -78,7 +76,7 @@ class WeatherScene(Scene):
     def draw(self, screen):
         screen.fill(Colors.BLACK)
 
-        self.temp_text = self.font.render(f"{round(self.weather_data.temperature, 0)} DEG C", True, Colors.WHITE)
+        self.temp_text = self.font.render("%.0f DEG C" % self.weather_data.temperature, True, Colors.WHITE)
         self.temp_text_rect = self.temp_text.get_rect(
             center=(self.application.width / 2, (self.application.height / 2) + 16)
         )
@@ -90,5 +88,5 @@ class WeatherScene(Scene):
         screen.blit(self.temp_text, self.temp_text_rect)
         screen.blit(self.weather_text, self.weather_text_rect)
 
-    def _update_weather(self) -> None:
+    def _update_weather(self):
         self.weather_data = self.open_meteo.get_current_weather(self.latitude, self.longitude)

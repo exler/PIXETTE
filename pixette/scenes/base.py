@@ -1,14 +1,8 @@
 from abc import ABC
-from typing import Optional
 
 
 class Scene(ABC):
-    def __init__(
-        self,
-        title: Optional[str] = None,
-        resolution: Optional[tuple[int, int]] = None,
-        update_rate: Optional[int] = None,
-    ):
+    def __init__(self, title=None, resolution=None, update_rate=None):
         self._application = None
 
         self.title = title

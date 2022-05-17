@@ -1,5 +1,4 @@
 from datetime import datetime
-from typing import Optional
 
 import pygame
 import requests
@@ -10,10 +9,10 @@ from pixette.scenes.base import Scene
 class NBPWebClient:
     CURRENT_EXCHANGE_RATE_URL = "http://api.nbp.pl/api/exchangerates/rates/{table}/{code}/"
 
-    def __init__(self) -> None:
+    def __init__(self):
         self.session = requests.Session()
 
-    def get_exchange_rate(self, currency: str) -> float:
+    def get_exchange_rate(self, currency):
         """
         Gets latest exchange rate from `currency` to PLN.
 
@@ -25,7 +24,7 @@ class NBPWebClient:
 
 
 class CurrenciesScene(Scene):
-    def __init__(self, update_interval: int = 3600):
+    def __init__(self, update_interval=3600):
         super().__init__()
 
         self.update_interval = update_interval
@@ -33,7 +32,8 @@ class CurrenciesScene(Scene):
         self.font = pygame.font.Font(STANDARD_FONT, 16)
 
         self.nbp = NBPWebClient()
-        self.last_check: Optional[datetime] = None
+        self._update_currencies()
+        self.last_check = datetime.now()
 
     def on_enter(self, previous_scene):
         super().on_enter(previous_scene)
@@ -71,7 +71,7 @@ class CurrenciesScene(Scene):
         screen.blit(eur_value, eur_value_rect)
         screen.blit(usd_value, usd_value_rect)
 
-    def _update_currencies(self) -> None:
+    def _update_currencies(self):
         eur = self.nbp.get_exchange_rate("eur")
         usd = self.nbp.get_exchange_rate("usd")
         self.exchange_rates = {"eur": eur, "usd": usd}

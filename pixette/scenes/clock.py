@@ -6,7 +6,7 @@ from pixette.scenes.base import Scene
 
 
 class ClockScene(Scene):
-    def __init__(self) -> None:
+    def __init__(self):
         super().__init__()
 
         self.font = pygame.font.Font(STANDARD_FONT, 16)

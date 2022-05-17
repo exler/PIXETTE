@@ -1,22 +1,19 @@
 import logging
 import os
-from typing import Optional, Type
 
 import pygame
 
-from pixette.device import Device
 from pixette.scenes.admin import AdminScene
-from pixette.scenes.base import Scene
 from pixette.scenes.clock import ClockScene
 from pixette.scenes.currencies import CurrenciesScene
 from pixette.scenes.weather import WeatherScene
 
 
 class Application:
-    def __init__(self, device: Device, title: str, resolution: tuple[int, int], update_rate: int, debug: bool = False):
+    def __init__(self, device, title, resolution, update_rate, debug=False):
         self.device = device
         if not debug:
-            os.environ["SDL_FBDEV"] = "/dev/fb0"
+            os.environ["SDL_FBDEV"] = "/dev/fb1"
             os.environ["SDL_VIDEODRIVER"] = "fbcon"
             os.environ["SDL_VIDEO_CENTERED"] = "1"
 
@@ -30,6 +27,8 @@ class Application:
         self.resolution = resolution
         self.update_rate = update_rate
 
+        logging.info("Display initialized")
+
         self.scenes = [ClockScene(), CurrenciesScene(), WeatherScene(lat=51.11, lon=17.04), AdminScene()]
         logging.info("Scenes loaded")
 
@@ -37,48 +36,48 @@ class Application:
         self.device.right_btn.when_pressed = self.next_scene
 
     @property
-    def title(self) -> str:
+    def title(self):
         return pygame.display.get_caption()
 
     @title.setter
-    def title(self, value: str) -> None:
+    def title(self, value):
         pygame.display.set_caption(value)
 
     @property
-    def resolution(self) -> tuple[int, int]:
+    def resolution(self):
         return self._screen.get_size()
 
     @resolution.setter
-    def resolution(self, value: tuple[int, int]) -> None:
+    def resolution(self, value):
         self._screen = pygame.display.set_mode(value)
 
     @property
-    def width(self) -> int:
+    def width(self):
         return self.resolution[0]
 
     @property
-    def height(self) -> int:
+    def height(self):
         return self.resolution[1]
 
     @property
-    def active_scene(self) -> Optional[Scene]:
+    def active_scene(self):
         return self._scene
 
-    def next_scene(self) -> None:
+    def next_scene(self):
         index = self.scenes.index(self.active_scene)
         if index == len(self.scenes) - 1:
             self.change_scene(self.scenes[0])
         else:
             self.change_scene(self.scenes[index + 1])
 
-    def previous_scene(self) -> None:
+    def previous_scene(self):
         index = self.scenes.index(self.active_scene)
         if index == 0:
             self.change_scene(self.scenes[-1])
         else:
             self.change_scene(self.scenes[index - 1])
 
-    def change_scene(self, scene: Scene) -> None:
+    def change_scene(self, scene):
         """
         Change the currently active scene.
         This will invoke `scene.on_exit` and `scene.on_enter` methods on the switching scenes.
@@ -93,7 +92,7 @@ class Application:
             self.active_scene._application = self
             self.active_scene.on_enter(previous_scene=old_scene)
 
-    def run(self, scene: Optional[Type[Scene]] = None) -> None:
+    def run(self, scene=None):
         """
         Start the application at given scene.
         """
@@ -113,7 +112,7 @@ class Application:
                 for event in pygame.event.get():
                     self.active_scene.handle_event(event)
                     if event.type == pygame.QUIT:
-                        self.change_scene(None)  # trigger scene.on_exit()
+                        self.change_scene(None)  # Trigger scene.on_exit()
                         return
                     self.device.keys(event)
 
@@ -125,5 +124,5 @@ class Application:
                 logging.info("Shutting down")
                 break
             except Exception as e:
-                logging.exception(f"Caught exception: {e}", exc_info=True)
+                logging.exception("Caught exception: %s" % e, exc_info=True)
                 break

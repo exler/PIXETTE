@@ -3,7 +3,7 @@
     <p align="center">📟 Time/weather/currency display using a Raspberry Pi Zero with Waveshare LCD HAT</p>
     <p align="center">
         <img src="https://img.shields.io/badge/-Raspberry%20Pi%20Zero%20W-black?style=flat-square&logo=raspberry%20pi&logoColor=C51A4A">
-        <img src="https://img.shields.io/badge/python-3.9%2B-lightblue?style=flat-square&logo=python&logoColor=lightblue">
+        <img src="https://img.shields.io/badge/python-3.5%2B-lightblue?style=flat-square&logo=python&logoColor=lightblue">
         <img src="https://img.shields.io/github/license/EXLER/pixette?style=flat-square">
         <img src="https://img.shields.io/github/repo-size/EXLER/pixette?style=flat-square">
     </p>
@@ -16,46 +16,56 @@
 
 ## Installation
 
-1. Install BCM2835 libraries
+1. Install system libraries
 ```bash
-$ wget http://www.airspayce.com/mikem/bcm2835/bcm2835-1.68.tar.gz
-$ tar zxvf bcm2835-1.68.tar.gz 
-$ cd bcm2835-1.68/
-$ sudo ./configure && sudo make && sudo make check && sudo make install
+$ sudo apt install git cmake python3-pip python3-dev python3-pygame python3-gpiozero python3-requests libsdl2-dev libsdl2-ttf-dev
 ```
 
-2. Install system libraries
+2. Enable SPI
+
+Enable SPI in `Interfacing Options > SPI` in `raspi-config`
+
 ```bash
-$ sudo apt install git cmake python3-pip python3-dev python3-pygame python3-gpiozero python3-numpy libsdl2-dev libsdl2-image-dev libjpeg-dev libsdl2-ttf-dev libfreetype6-dev libsdl2-mixer-dev libportmidi-dev
+$ sudo raspi-config
 ```
 
-3. Update `/boot/config.txt`
-```bash
-# Comment the following lines
-dtoverlay=vc4-fkms-v3d
-max_framebuffers=2
+3. Add the following lines to `/etc/modules`
 
-# Add the following line at the end of the file
+```bash
+spi-bcm2835
+fbtft_device
+```
+
+4. Add the following lines to `/etc/modprobe.d/fbtft.conf`
+
+```bash
+options fbtft_device name=adafruit18_green gpios=reset:27,dc:25,cs:8,led:24 speed=40000000 bgr=1 fps=60 custom=1 height=128 width=128 rotate=90
+```
+
+5. Add the following lines to `/boot/config.txt`
+
+```bash
+dtoverlay=pwm-2chan,pin=18,func=2,pin2=13,func2=4
 hdmi_force_hotplug=1
-hdmi_cvt=300 300 60 1 0 0 0
+hdmi_cvt=128 128 60 1 0 0 0
 hdmi_group=2
+hdmi_mode=1
 hdmi_mode=87
 display_rotate=0
-gpio=6,19,5,26,13,21,20,16=pu
 ```
 
-4. Setup FBCP
-```
-$ git clone https://github.com/EngineerWill/waveshare_fbcp
-$ cd waveshare_fbcp
-$ mkdir build
-$ cd build
-$ cmake -DSPI_BUS_CLOCK_DIVISOR=20 -DWAVESHARE_1INCH44_LCD_HAT=ON -DBACKLIGHT_CONTROL=ON -DSTATISTICS=0 ..
-$ make -j
-$ sudo cp ~/waveshare_fbcp/build/fbcp /usr/local/bin/fbcp
-$ sudo nano /etc/rc.local
+6. Copy between `fb0` and `fb1`
 
-# Add this before exit 0
+```bash
+$ git clone https://github.com/tasanakorn/rpi-fbcp
+$ mkdir rpi-fbcp/build
+$ cd rpi-fbcp/build/
+$ cmake .. && make
+$ sudo install fbcp /usr/local/bin/fbcp
+```
+
+To launch `fbcp` automatically at startup, add the following lines to `/etc/rc.local` before `exit 0`:
+```bash
 fbcp&
 ```
 
@@ -64,7 +74,7 @@ fbcp&
 To test the Raspberry Pi framebuffer configuration use the [Linux Framebuffer Imageviewer](https://linux.die.net/man/1/fbi):
 ```bash
 $ sudo apt install fbi
-$ sudo fbi -T 2 -d /dev/fb0 image.png
+$ sudo fbi -T 2 -d /dev/fb1 image.png
 ```
 
 ## Usage

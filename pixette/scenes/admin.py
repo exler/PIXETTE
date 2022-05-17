@@ -1,7 +1,6 @@
 import platform
 import subprocess
 from datetime import datetime
-from typing import Optional
 
 import pygame
 from pixette.constants import ARROW_RIGHT, STANDARD_FONT, Colors
@@ -17,10 +16,11 @@ class AdminScene(Scene):
 
         self.arrow_right = pygame.image.load(ARROW_RIGHT)
 
-        self.index: Optional[int] = None
+        self.index = None
         self.max_index = 1
 
-        self.last_check: Optional[datetime] = None
+        self._update_ssh_status()
+        self.last_check = datetime.now()
 
     def on_enter(self, previous_scene):
         super().on_enter(previous_scene)
@@ -88,7 +88,7 @@ class AdminScene(Scene):
         screen.blit(self.ssh_text, self.ssh_text_rect)
         screen.blit(self.reboot_text, self.reboot_text_rect)
 
-    def next_index(self) -> None:
+    def next_index(self):
         if self.index is None and self.ssh_enabled is None:
             self.index = 1
         elif self.index is None:
@@ -101,7 +101,7 @@ class AdminScene(Scene):
         else:
             self.index += 1
 
-    def previous_index(self) -> None:
+    def previous_index(self):
         if self.index is None or self.index == 0:
             self.index = self.max_index
         else:
@@ -110,35 +110,33 @@ class AdminScene(Scene):
             else:
                 self.index -= 1
 
-    def perform_operation(self) -> None:
+    def perform_operation(self):
         if self.index == 0:
             self._toggle_ssh()
         elif self.index == 1:
             self._reboot()
 
-    def _update_ssh_status(self) -> None:
+    def _update_ssh_status(self):
         if platform.system() == "Linux":
-            output = subprocess.check_output(
-                ["service", "sshd", "status", "|", "awk", "'$1 == \"Active:\" {print $2}'"]
-            )
-            if output == b"active":
+            output = subprocess.check_output(["service", "ssh", "status"])
+            if str(output).find("active (running)") != -1:
                 self.ssh_enabled = True
             else:
                 self.ssh_enabled = False
         else:
             self.ssh_enabled = None
 
-    def _toggle_ssh(self) -> None:
+    def _toggle_ssh(self):
         if platform.system() == "Linux":
             if self.ssh_enabled:
-                subprocess.run(["sudo", "service", "sshd", "stop"])
+                subprocess.run(["sudo", "service", "ssh", "stop"])
             else:
-                subprocess.run(["sudo", "service", "sshd", "start"])
+                subprocess.run(["sudo", "service", "ssh", "start"])
             self.ssh_enabled = not self.ssh_enabled
         else:
             pass
 
-    def _reboot(self) -> None:
+    def _reboot(self):
         if platform.system() == "Linux":
             subprocess.run(["sudo", "reboot"])
         else:
